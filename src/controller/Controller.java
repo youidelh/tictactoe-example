@@ -3,8 +3,9 @@ package controller;
 import models.Game;
 import models.Messages;
 import models.Player;
+import utils.observer.Observable;
 
-public class Controller {
+public class Controller extends Observable {
     Game game;
     boolean myTurn;
     Player[] players;
@@ -37,14 +38,17 @@ public class Controller {
     public void playInCell(int i, int j) {
         if (this.game.isCellSet(i, j)) {
             this.statusMessage = Messages.CELL_IS_SET;
+            notifyObservers();
         } else {
             this.game.setCell(this.players[this.myTurn ? 0 : 1].getSymbol() , i, j);
             this.statusMessage = Messages.PLAYER_CAN_PLAY(this.players[this.myTurn ? 0 : 1].getName(), this.players[this.myTurn ? 1 : 0].getName());
             this.myTurn = !this.myTurn;
+            notifyObservers();
 
             // Player did play
             if (this.userDidWin()) {
                 this.statusMessage = Messages.PLAYER_WON;
+                notifyObservers();
             }
         }
     }
@@ -54,12 +58,14 @@ public class Controller {
             this.playInCell(i, j);
         } else {
             this.statusMessage = Messages.UNDEFINED_PLAYERS;
+            notifyObservers();
         }
     }
     public void setPlayers (String name1, String name2) { // "Aya", "Marwa"
         this.players[0] = new Player("X", name1);
         this.players[1] = new Player("O", name2);
         this.statusMessage = Messages.PLAYERS_SET(name1);
+        notifyObservers(); // ACHTUNG
     }
 
     public boolean userDidWin () {
