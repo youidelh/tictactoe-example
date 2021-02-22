@@ -1,10 +1,13 @@
-package models;
+package models.impl;
 
-public class Game {
-    private Cell[][] grid;
+import models.ICell;
+import models.IGame;
+
+public class Game implements IGame {
+    private ICell[][] grid;
     int size = 3;
     public Game () {
-        this.grid = new Cell[size][size];
+        this.grid = new ICell[size][size];
         for (int i = 0; i < this.grid.length; i++) {
             for (int j = 0; j < this.grid[i].length; j++) {
                 this.grid[i][j] = new Cell();
@@ -18,7 +21,7 @@ public class Game {
         return this.grid[i][j].isSet();
     }
 
-    public Cell getCell (int i, int j) {
+    public ICell getCell (int i, int j) {
         return this.grid[i][j];
     }
 
@@ -26,7 +29,7 @@ public class Game {
         this.grid[i][j].setValue(value);
     }
 
-    public Cell[][] getCells() {
+    public ICell[][] getCells() {
         return this.grid;
     }
     public String toString () { // \n --> new line , " " --> space, jede Cell ---
@@ -47,5 +50,13 @@ public class Game {
         }
         result+= "-------------";
         return result;
+    }
+
+    public void restartGame() {
+        for (int i = 0; i < this.grid.length; i++) {
+            for (int j = 0; j < this.grid[i].length; j++) {
+                this.grid[i][j] = new Cell();
+            }
+        }
     }
 }

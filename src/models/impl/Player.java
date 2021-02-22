@@ -1,6 +1,8 @@
-package models;
+package models.impl;
 
-public class Player {
+import models.IPlayer;
+
+public class Player implements IPlayer {
     String symbol;
     String name;
 

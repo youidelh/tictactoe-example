@@ -1,6 +1,8 @@
-package models;
+package models.impl;
 
-public class Cell {
+import models.ICell;
+
+public class Cell implements ICell {
     private String value; // "", "X", "O"
     public Cell () {
         this.value = "";
