@@ -1,6 +1,7 @@
 package controller.impl;
 
 import controller.IController;
+import models.ICell;
 import models.IGame;
 import models.IPlayer;
 import models.impl.Messages;
@@ -32,6 +33,12 @@ public class Controller extends Observable implements IController {
         return this.players[0] != null && this.players[1] != null;
     }
 
+    public int getGameSize () {
+        return this.game.getSize();
+    }
+    public ICell getICell (int i, int j) {
+        return this.game.getCell(i, j);
+    }
     /**
      * Check if cell is set, otherwise set cell and change turn.
      * @param i Row index
