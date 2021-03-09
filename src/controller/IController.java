@@ -13,4 +13,5 @@ public interface IController {
     public void addObserver(IObserver s);
     public int getGameSize ();
     public ICell getICell (int i, int j);
+    public boolean userDidWin ();
 }

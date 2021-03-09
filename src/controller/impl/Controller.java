@@ -60,7 +60,9 @@ public class Controller extends Observable implements IController {
     }
 
     public void play (int i, int j) {
-        if (this.playersAreSet()) { // kann spielen
+        if (this.userDidWin()) {
+            notifyObservers();
+        } else if (this.playersAreSet()) { // kann spielen
             this.playInCell(i, j);
         } else {
             this.statusMessage = Messages.UNDEFINED_PLAYERS;
@@ -75,7 +77,7 @@ public class Controller extends Observable implements IController {
     }
 
 
-    private boolean userDidWin () {
+    public boolean userDidWin () {
         boolean win = false;
 
         for (int i = 0; i < this.game.getSize(); i++) {
@@ -94,7 +96,7 @@ public class Controller extends Observable implements IController {
                     && (this.game.getCell(1, i).getValue() == this.game.getCell(2, i).getValue());
         }
 
-        return win || userDidWinDiagonal();
+        return this.playersAreSet() && (win || userDidWinDiagonal());
     }
 
     private boolean userDidWinDiagonal () {
